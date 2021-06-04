@@ -21,7 +21,7 @@ html, body {
     padding: 20px;
     }
     .title {
-    font-size: 50px;color: #157aba;font-weight: bold;padding:20px;background-color: mistyrose;
+    font-size: 50px;color: #157aba;font-weight: bold;padding:20px;background-color: #ccc;
     }
     .links > a {
     color: hotpink;padding: 10px;font-size: 12px;font-weight: 600;letter-spacing: .1rem;text-decoration: none;

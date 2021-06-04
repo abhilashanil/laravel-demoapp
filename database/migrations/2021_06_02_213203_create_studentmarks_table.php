@@ -14,14 +14,15 @@ class CreateStudentmarksTable extends Migration
     public function up()
     {
         Schema::create('studentmarks', function (Blueprint $table) {
+            $table->engine = 'InnoDB'; 
             $table->id();
             $table->integer('maths');
             $table->integer('science');            
             $table->integer('history');
             $table->string('term');
-            $table->foreignId('student_id')->constrained('students');
+            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
             $table->string('status');
-            $table->timestamps();
+            $table->timestamps();            
         });
     }
 

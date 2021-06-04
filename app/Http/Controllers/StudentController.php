@@ -26,7 +26,7 @@ class StudentController extends Controller
         if ($request->has('submit')) {
             $validator = Validator::make($request->all(), [
             'student_name' => 'bail|required|max:255',
-            'age' => 'required',
+            'age' => 'required|integer',
             'teacher_id' => 'required',
             ]);
             
@@ -40,10 +40,12 @@ class StudentController extends Controller
             $gender = $request->input('gender');
 
             $data = array('name'=>$student_name,
-            "age"=>$age,
-            "teacher_id"=>$teacher_id,
-            "gender"=>$gender,
-            "status"=>'active'
+                "age"=>$age,
+                "teacher_id"=>$teacher_id,
+                "gender"=>$gender,
+                "status"=>'active',
+                "created_at" =>  \Carbon\Carbon::now(), 
+                "updated_at" => \Carbon\Carbon::now()
             );
             
             Student::insert($data);
@@ -69,7 +71,7 @@ class StudentController extends Controller
             {
                 $validator = Validator::make($request->all(), [
                     'student_name' => 'bail|required|max:255',
-                    'age' => 'required',
+                    'age' => 'required|integer',
                     'teacher_id' => 'required',
                     ]);                
                 
@@ -124,11 +126,11 @@ class StudentController extends Controller
     public function savestudentmark(Request $request) {
         if ($request->has('submit')) {
             $validator = Validator::make($request->all(), [
-            'student_id' => 'required',
-            'maths' => 'required',
-            'science' => 'required',
-            'history' => 'required',
-            'term' => 'required'
+                'student_id' => 'required',
+                'maths' => 'required|integer',
+                'science' => 'required|integer',
+                'history' => 'required|integer',
+                'term' => 'required'
             ]);
             
             if ($validator->fails()) {
@@ -142,16 +144,18 @@ class StudentController extends Controller
             $term = $request->input('term');
 
             $data = array(
-            "student_id"=>$student_id,
-            "maths"=>$maths,
-            "science"=>$science,
-            "history"=>$history,
-            "term"=>$term,
-            "status"=>'active'
+                "student_id"=>$student_id,
+                "maths"=>$maths,
+                "science"=>$science,
+                "history"=>$history,
+                "term"=>$term,
+                "status"=>'active',
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now()
             );
             
             Studentmarks::insert($data);
-            return redirect('/')->with('success','Student Marks added successfully.');
+            return redirect('/studentmarks')->with('success','Student Marks added successfully.');
         }
         if ($request->has('cancel')) {
             return redirect('/');
@@ -171,9 +175,9 @@ class StudentController extends Controller
             if ($stud = Student::find($id))
             {
                 $validator = Validator::make($request->all(), [
-                    'maths' => 'required',
-                    'science' => 'required',
-                    'history' => 'required',
+                    'maths' => 'required|integer',
+                    'science' => 'required|integer',
+                    'history' => 'required|integer',
                     'term' => 'required'
                     ]);
                 
@@ -193,13 +197,13 @@ class StudentController extends Controller
                 "status"=>'active'
                 );
                 Studentmarks::where('id', $id)->update($data);
-                return redirect('/')->with('success','Student marks updated successfully.');
+                return redirect('/studentmarks')->with('success','Student marks updated successfully.');
             } else {
-            return redirect('/')->with('error','Student marks not found.');
+            return redirect('/studentmarks')->with('error','Student marks not found.');
             }
         }
         if ($request->has('cancel')) {
-            return redirect('/');
+            return redirect('/studentmarks');
         }
     }
 
@@ -207,9 +211,9 @@ class StudentController extends Controller
         if ($studentMarks = Studentmarks::find($id)) {
             $data = array("status"=>'deleted');
             Studentmarks::where('id', $id)->update($data);
-            return redirect('/')->with('success','Student marks removed successfully');
+            return redirect('/studentmarks')->with('success','Student marks removed successfully');
         } else {
-            return redirect('/')->with('error','Student marks not found.');
+            return redirect('/studentmarks')->with('error','Student marks not found.');
         }
     }    
 }

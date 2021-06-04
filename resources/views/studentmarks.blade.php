@@ -36,7 +36,7 @@
 							<td>{{ $key->history }}</td>
 							<td>{{ $key->term }}</td>
 							<td>{{ $key->maths + $key->science + $key->history }}</td>
-							<td>{{ ucwords($key->teacher_id) }}</td>
+							<td>{{ $key->created_at->toDateString() }}</td>
 							<td>
 								<a href='{{ url("/editstudentmark/$key->id") }}'>Edit</a>
 								<a href='{{ url("/removestudentmark/$key->id") }}'>Remove</a>
